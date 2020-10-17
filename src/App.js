@@ -1,24 +1,21 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { Button, Input } from 'antd';
+import NavBar from './components/NavBar.jsx'
+import LeftBar from './components/LeftBar.jsx'
+import Main from './components/Main.jsx'
+import RightBar from './components/RightBar';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ height: '100vh' }}>
+      <NavBar></NavBar>
+      <div style={{ display: 'flex', flexDirection: 'row', height: '100%' }}>
+        <LeftBar></LeftBar>
+        <Main></Main>
+        <RightBar />
+      </div>
     </div>
   );
 }
