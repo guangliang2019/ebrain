@@ -8,6 +8,7 @@ const style = {
         height: '80px',
         display: 'flex',
         flexDirection: 'row',
+        // position: 'fixed', zIndex: 1,
     },
 
 }

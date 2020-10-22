@@ -6,18 +6,14 @@ import NavBar from './components/NavBar.jsx'
 import LeftBar from './components/LeftBar.jsx'
 import Main from './components/Main.jsx'
 import RightBar from './components/RightBar';
-import LogoZone from './components/LogoZone.jsx'
-import { ScrollView } from "@cantonjs/react-scroll-view";
 
 function App() {
   return (
     <div style={{ height: '100vh' }}>
       <NavBar></NavBar>
-      <div style={{ display: 'flex', flexDirection: 'row', height: '944px' }}>
+      <div style={{ display: 'flex', flexDirection: 'row', height: '100%' }}>
         <LeftBar></LeftBar>
-        <ScrollView style={{ height: '944px' }}>
-          <Main></Main>
-        </ScrollView>
+        <Main></Main>
         <RightBar />
       </div>
     </div>
