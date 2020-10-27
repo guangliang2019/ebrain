@@ -1,3 +1,4 @@
+import { Card } from 'antd'
 import React from 'react'
 
 const style = {
@@ -17,13 +18,6 @@ class Main extends React.Component {
     render() {
         return (
             <div style={style.root}>
-                <h1>content</h1>
-                <h1>content</h1>
-                <h1>content</h1>
-                <h1>content</h1>
-                <h1>content</h1>
-
-
             </div>
         )
     }

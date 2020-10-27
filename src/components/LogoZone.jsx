@@ -4,6 +4,8 @@ const style = {
     root: {
         background: '#FFFFFF',
         width: '200px',
+        minWidth: '200px',
+        maxHeight: '80px',
         height: '80px',
         borderRight: '1px solid #D9D9D9',
         display: 'flex',
@@ -19,6 +21,7 @@ const style = {
         fontWeight: 400,
         color: '#595959',
         lineHeight: '33px',
+        margin: '0px'
     }
 
 }
