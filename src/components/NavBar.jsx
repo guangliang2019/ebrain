@@ -47,7 +47,7 @@ class NavBar extends React.Component {
                         style={{
                             color: '#BFBFBF',
                             fontSize: 24,
-                            width: '200px',
+                            width: '80%',
                             marginLeft: '8px'
                         }}
 
@@ -62,7 +62,8 @@ class NavBar extends React.Component {
                         <Button
                             className="button"
                             style={{
-                                border: 'none'
+                                border: 'none',
+                                backgroundColor: 'transparent'
                             }}
                             shape="circle"
                             icon={<SettingOutlined

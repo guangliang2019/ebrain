@@ -5,19 +5,48 @@ const style = {
     root: {
         width: '920px',
         background: '#F5F7FA',
-        borderTop: '1px solid #D9D9D9',
-        //position: '',
         height: '2000px',
-        // position: 'relative',
-        // left: 200, top: 80
+        padding: '0px 13px 0px 36px'
     },
-
+    game: {
+        width: '267px',
+        height: '229px',
+        marginTop: '16px',
+        marginRight: '23px',
+        //border: '.5px solid #E9E9E9',
+    },
+    divider: {
+        width: '100%',
+        height: '.5px',
+        background: '#D9D9D9',
+        marginTop: '48px',
+        marginBottom: '24px',
+        marginRight: '23px',
+    }
 }
 
 class Main extends React.Component {
     render() {
         return (
             <div style={style.root}>
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+
+
+                }}>
+                    <Card hoverable style={style.game} />
+                    <Card hoverable style={style.game} />
+                    <Card hoverable style={style.game} />
+                    <Card hoverable style={style.game} />
+                    <Card hoverable style={style.game} />
+                    <Card hoverable style={style.game} />
+                    <Card hoverable style={style.game} />
+                    <Card hoverable style={style.game} />
+                    <div style={style.divider}></div>
+                </div>
+
             </div>
         )
     }

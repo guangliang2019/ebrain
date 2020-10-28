@@ -11,13 +11,20 @@ import { ScrollView } from "@cantonjs/react-scroll-view";
 
 function App() {
   return (
-    <div style={{ height: '100vh' }}>
+    <div style={{ height: '100vh', background: "rgba(0,0,0,0)" }}>
       <NavBar></NavBar>
-      <div style={{ display: 'flex', flexDirection: 'row', height: '944px' }}>
+      <div style={{ display: 'flex', flexDirection: 'row', height: '944px', background: "rgba(0,0,0,0)" }}>
         <LeftBar></LeftBar>
-        <ScrollView style={{ height: '944px' }}>
-          <Main></Main>
-        </ScrollView>
+        <div>
+          <div style={{
+            height: '1px',
+            //width: '1000px',
+            background: '#D9D9D9'
+          }}></div>
+          <ScrollView style={{ height: '943px' }}>
+            <Main></Main>
+          </ScrollView>
+        </div>
         <RightBar />
       </div>
     </div>

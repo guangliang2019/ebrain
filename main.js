@@ -9,10 +9,14 @@ function createWindow() {
 
     mainWindow = new BrowserWindow({
         width: 1440,
-        height: 1024,
+        height: 1024 + 40,
         transparent: true,
-        frame: false,
-        titleBarStyle: 'hidden',
+        icon: './favicon.ico',
+        //frame: false,
+        titleBarStyle: 'default',
+        allowRunningInsecureContent: true,
+        experimentalCanvasFeatures: true,
+        resizable: false,
     })
     /* 
     * 加载应用----- electron-quick-start中默认的加载入口
