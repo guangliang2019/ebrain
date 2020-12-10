@@ -3,10 +3,11 @@ import React from 'react'
 const style = {
     root: {
         width: '320px',
-        height: '943px',
+        height: '2000px',
         background: '#FFFFFF',
         border: '1px solid #D9D9D9',
-        borderBottom: 'none'
+        borderTop: 'none',
+        borderBottom: 'none',
     },
 
 }

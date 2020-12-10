@@ -8,6 +8,7 @@ import Main from './components/Main.jsx'
 import RightBar from './components/RightBar';
 import LogoZone from './components/LogoZone.jsx'
 import { ScrollView } from "@cantonjs/react-scroll-view";
+import { BrowserRouter as Router } from "react-router-dom"
 
 function App() {
   return (
@@ -25,7 +26,16 @@ function App() {
             <Main></Main>
           </ScrollView>
         </div>
-        <RightBar />
+        <div>
+          <div style={{
+            height: '1px',
+            //width: '1000px',
+            background: '#D9D9D9'
+          }}></div>
+          <ScrollView style={{ height: '943px' }}>
+            <RightBar />
+          </ScrollView>
+        </div>
       </div>
     </div>
   );
