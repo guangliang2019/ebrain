@@ -2,7 +2,7 @@ import React from 'react'
 import { Menu, Switch } from 'antd';
 import Icon from '@ant-design/icons';
 import { HomeOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons';
-
+import { Route, Link } from 'react-router-dom'
 const { SubMenu } = Menu;
 
 const TestSVG = () =>
@@ -79,7 +79,9 @@ class LeftBar extends React.Component {
                         title="Navigation One"
                         style={style.menuItem}
                     >
-                        主页
+                        <Link to="/Home">
+                            主页
+                        </Link>
                     </Menu.Item>
                     <Menu.Item
                         key="sub2"
@@ -94,7 +96,9 @@ class LeftBar extends React.Component {
                         title="Navigation One"
                         style={style.menuItem}
                     >
-                        游戏
+                        <Link to="/GameBase">
+                            游戏
+                        </Link>
                     </Menu.Item>
                     <Menu.Item
                         key="sub3"
@@ -109,7 +113,9 @@ class LeftBar extends React.Component {
                         title="Navigation One"
                         style={style.menuItem}
                     >
-                        报告
+                        <Link to="/Report">
+                            报告
+                        </Link>
                     </Menu.Item>
                 </Menu>
             </div>

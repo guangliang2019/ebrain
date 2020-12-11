@@ -1,0 +1,148 @@
+{
+  "RECORDS": [
+    {
+      "aid": "1",
+      "aname": "推理",
+      "fatheraid": "0",
+      "adescription": ""
+    },
+    {
+      "aid": "2",
+      "aname": "记忆",
+      "fatheraid": "0",
+      "adescription": ""
+    },
+    {
+      "aid": "3",
+      "aname": "注意力",
+      "fatheraid": "0",
+      "adescription": ""
+    },
+    {
+      "aid": "4",
+      "aname": "协调",
+      "fatheraid": "0",
+      "adescription": ""
+    },
+    {
+      "aid": "5",
+      "aname": "感知力",
+      "fatheraid": "0",
+      "adescription": ""
+    },
+    {
+      "aid": "6",
+      "aname": "处理速度",
+      "fatheraid": "1",
+      "adescription": "是能够流畅地完成简单任务或充分学习过的任务的能力。"
+    },
+    {
+      "aid": "7",
+      "aname": "计划",
+      "fatheraid": "1",
+      "adescription": "\"提前思考\" 的能力，在大脑中预判执行某项任务的正确方法。"
+    },
+    {
+      "aid": "8",
+      "aname": "转移",
+      "fatheraid": "1",
+      "adescription": "行为和想法能够适应新的、变化的或意想不到的情况的能力。"
+    },
+    {
+      "aid": "9",
+      "aname": "情景式记忆",
+      "fatheraid": "2",
+      "adescription": "是对特定记忆和情况有意识的回忆。"
+    },
+    {
+      "aid": "10",
+      "aname": "命名",
+      "fatheraid": "2",
+      "adescription": "从我们的语义词典里搜索词汇的能力，被认为是一种基础的能力。"
+    },
+    {
+      "aid": "11",
+      "aname": "非语言记忆",
+      "fatheraid": "2",
+      "adescription": "存储和检索非语言信息的能力。"
+    },
+    {
+      "aid": "12",
+      "aname": "短时记忆",
+      "fatheraid": "2",
+      "adescription": "指的是为执行复杂的认知任务，如语言理解、学习、推理，所必需的暂时存储和处理信息。"
+    },
+    {
+      "aid": "13",
+      "aname": "短时视觉记忆",
+      "fatheraid": "2",
+      "adescription": "暂时保留少量视觉信息的能力。"
+    },
+    {
+      "aid": "14",
+      "aname": "短时听觉记忆",
+      "fatheraid": "2",
+      "adescription": "在短暂的时间内记住听觉信息的能力。"
+    },
+    {
+      "aid": "15",
+      "aname": "注意力集中",
+      "fatheraid": "3",
+      "adescription": "\"提前思考\" 的能力，在大脑中预判执行某项任务的正确方法。"
+    },
+    {
+      "aid": "16",
+      "aname": "抑制",
+      "fatheraid": "3",
+      "adescription": "是在执行任务时忽略不相关刺激或抑制不相关反应的能力。"
+    },
+    {
+      "aid": "17",
+      "aname": "更新",
+      "fatheraid": "3",
+      "adescription": "是灵活地作出反应，跟上环境变化的能力。"
+    },
+    {
+      "aid": "18",
+      "aname": "注意力分配",
+      "fatheraid": "3",
+      "adescription": "在同一时间能够完成多个动作，能同时注意两个或两个以上的信息渠道/模式。"
+    },
+    {
+      "aid": "19",
+      "aname": "手眼协调",
+      "fatheraid": "4",
+      "adescription": "手和眼同步的敏感程度。"
+    },
+    {
+      "aid": "20",
+      "aname": "反应时间",
+      "fatheraid": "4",
+      "adescription": "感知和处理简单刺激，并对此作出回应的能力。"
+    },
+    {
+      "aid": "21",
+      "aname": "识别",
+      "fatheraid": "5",
+      "adescription": "从过去的知识中检索信息，认出特定事件、地点或其他信息的能力。"
+    },
+    {
+      "aid": "22",
+      "aname": "扫视",
+      "fatheraid": "5",
+      "adescription": "在周遭环境中快速高效地找到有效信息的能力。"
+    },
+    {
+      "aid": "23",
+      "aname": "空间感知",
+      "fatheraid": "5",
+      "adescription": "是评估事物在空间中的安排并探索事物和环境之间关系的能力。"
+    },
+    {
+      "aid": "24",
+      "aname": "视野宽度",
+      "fatheraid": "5",
+      "adescription": "指的是当我们正视前方时所能看到的范围。"
+    }
+  ]
+}

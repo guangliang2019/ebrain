@@ -13,7 +13,7 @@ const style = {
     root: {
         width: '920px',
         background: '#F5F7FA',
-        //height: '2000px',
+        height: 'auto',
         padding: '0px 13px 0px 36px'
     },
     game: {
@@ -53,7 +53,7 @@ const GamesSvg = () => (<svg width="25px" height="24px" viewBox="0 0 25 24" vers
 class GameBase extends React.Component {
     render() {
         return (
-            <div>
+            <div style={style.root}>
                 <div style={{
                     display: 'flex',
                     flexDirection: 'row',
