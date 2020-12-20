@@ -30,7 +30,7 @@ const style = {
 const LogoSvg = () => (
     <svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
         <title>简易logo</title>
-        <g id="主界面" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="主界面" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
             <g id="桌面端-HD" transform="translate(-35.000000, -24.000000)">
                 <g id="LOGOzone">
                     <rect id="LOGObg" fill="#FFFFFF" x="0" y="0" width="200" height="80"></rect>

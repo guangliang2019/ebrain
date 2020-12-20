@@ -1,7 +1,7 @@
 import React from 'react'
 import LogoZone from './LogoZone.jsx'
-import { Input, Tooltip, Avatar, Badge, Button } from 'antd';
-import { SettingOutlined, InfoCircleOutlined, UserOutlined, SearchOutlined } from '@ant-design/icons';
+import { Input, Button } from 'antd';
+import { SettingOutlined, SearchOutlined } from '@ant-design/icons';
 import UserMenu from './UserMenu.jsx';
 
 const style = {

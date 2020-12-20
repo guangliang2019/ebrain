@@ -6,7 +6,6 @@ import {
     loadingOpen,
     setUserInfo,
 } from '../actions/index.js'
-import { DateRange } from '@material-ui/icons';
 
 let count = 0;
 let time = 0;
@@ -17,11 +16,13 @@ let timeOut = 60000;
 const protocol = "http://"
 const adress = "39.101.129.59:"
 const port = "8080"
+const version = "/Ebrain-1.0"
+//http://39.101.129.59:8080/Ebrain-1.0/game/listAll
 
 let TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDAwODAwMDEsInVzZXJJZCI6IjE4ZTdmYjY1LTZlNjAtNDQ2YS04MTBlLWZlOTg1ZWM1ZWE3OSJ9.egdLGA3TCoGm1V6Nd50Hcklha03ZRPP1Qrrdq7MAzE4"
 
 //开发地址
-const ERVER_BASE = protocol + adress + port;
+const SERVER_BASE = protocol + adress + port + version;
 
 /**
  * 数据请求生成函数
@@ -42,7 +43,7 @@ const http_factory = method => (url, params = {}, isLoading = true) => {
 
     //请求头
     let headers = {
-        token: userInfo.token
+        //token: userInfo.token
     };
 
     const options = {

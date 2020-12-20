@@ -1,6 +1,5 @@
 import { Card, } from 'antd'
 import React from 'react'
-import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
 
 const { Meta } = Card;
 
@@ -42,7 +41,7 @@ class GameCard extends React.Component {
             //     <EllipsisOutlined key="ellipsis" />,
             // ]}
             >
-                <Meta title="游戏名称" description="注意力/抑制力/空间感知" />
+                <Meta title={this.props.title} description="注意力/抑制力/空间感知" />
             </Card>
         )
     }

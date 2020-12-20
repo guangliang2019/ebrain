@@ -1,14 +1,9 @@
-import { Card } from 'antd'
 import React from 'react'
-import Icon from '@ant-design/icons';
 
-import { Typography } from 'antd';
 import GameBase from '../pages/GameBase';
 import Home from '../pages/Home';
 import Report from '../pages/Report';
-import { Route, Link } from 'react-router-dom'
-
-const { Title } = Typography;
+import { Route } from 'react-router-dom'
 
 
 const style = {

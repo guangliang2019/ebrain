@@ -1,4 +1,7 @@
 import React from 'react'
+import AIconWithPopover from '../components/AIconWithPopover'
+import { AIcon1 } from '../icons/ablilty'
+
 
 class Report extends React.Component {
     constructor(props) {
@@ -10,7 +13,7 @@ class Report extends React.Component {
     render() {
         return (
             <div>
-
+                <AIconWithPopover />
             </div>
         )
     }
