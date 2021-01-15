@@ -4,7 +4,6 @@ import Icon from '@ant-design/icons';
 import { Typography } from 'antd';
 import GameCard from '../components/GameCard';
 
-import '../utils/fetch.js'
 import { postRequset } from '../utils/fetch.js';
 
 import { Spin } from 'antd';
@@ -67,22 +66,27 @@ class GameBase extends React.Component {
         }
     }
 
-    async getData() {
-        //let result1
-        setTimeout(() => { }, 1000)
+
+    async getData2() {
         postRequset("game/recommended")
+            .then((result) => { console.log(result) })
+    }
+
+    async getData() {
+
+        await postRequset("game/recommended")
             .then((result) => {
                 this.setState({
                     recommendedGameList: result.data
                 })
             })
-            .then(postRequset("game/listAll")
-                .then((result) => {
-                    this.setState({
-                        allGameList: result.data,
-                        isLoading: false
-                    })
-                }))
+        postRequset("game/listAll")
+            .then((result) => {
+                this.setState({
+                    allGameList: result.data,
+                    isLoading: false
+                })
+            })
     }
     loadGames(gameList) {
         let games = []
@@ -99,6 +103,7 @@ class GameBase extends React.Component {
     render() {
         if (this.state.isLoading) {
             this.getData()
+            this.getData2()
             return (
                 <div style={{
                     width: '920px',
