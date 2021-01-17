@@ -4,7 +4,7 @@ import GameBase from '../pages/GameBase';
 import Home from '../pages/Home';
 import Report from '../pages/Report';
 import { Route } from 'react-router-dom'
-
+import GameDetail from '../pages/GameDetail'
 
 const style = {
     root: {
@@ -22,6 +22,7 @@ class Main extends React.Component {
                 <Route path="/Home" component={Home} />
                 <Route path="/GameBase" component={GameBase} />
                 <Route path="/Report" component={Report} />
+                <Route path="/Detail" component={GameDetail} />
                 {/* <GameBase /> */}
             </div>
         )

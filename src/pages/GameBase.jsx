@@ -93,7 +93,8 @@ class GameBase extends React.Component {
         gameList.forEach(element => {
             games.push(
                 <GameCard
-                    key={element.gameid}
+                    key = {element.gid}
+                    gameid={element.gid}
                     title={element.gname}
                 />
             )

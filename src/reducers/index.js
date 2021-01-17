@@ -4,10 +4,13 @@ import { combineReducers } from 'redux';
 import userInfo from './userInfo/index.js'
 //请求部分
 import apiStatus from './apiStatus/index.js'
+//游戏状态
+import gameStatus from './gameStatus/index.js' 
 
 
 
 export default combineReducers({
     userInfo,
     apiStatus,
+    gameStatus,
 });
