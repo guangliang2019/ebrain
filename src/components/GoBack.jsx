@@ -2,6 +2,7 @@ import React from 'react'
 import { Button } from 'antd';
 import Icon, { ReloadOutlined } from '@ant-design/icons';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import { connect } from 'react-redux'
 
 const style = {
     root: {
