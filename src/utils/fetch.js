@@ -14,9 +14,9 @@ let timeOutTimer = null;
 let timeOut = 60000;
 
 const protocol = "http://"
-const adress = "39.101.129.59:"
+const adress = "39.100.11.92:"
 const port = "8080"
-const version = "/Ebrain-1.0"
+const version = ""
 //http://39.101.129.59:8080/Ebrain-1.0/game/listAll
 
 let TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDAwODAwMDEsInVzZXJJZCI6IjE4ZTdmYjY1LTZlNjAtNDQ2YS04MTBlLWZlOTg1ZWM1ZWE3OSJ9.egdLGA3TCoGm1V6Nd50Hcklha03ZRPP1Qrrdq7MAzE4"

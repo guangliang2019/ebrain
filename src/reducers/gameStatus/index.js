@@ -8,7 +8,7 @@ export default function gameStatus(state = initialState, action) {
     switch (action.type) {
         case Types.UPDATE_GAMEKEY:
             state.gamekey = action.data.newKey
-            return { ...state}
+            return { ...state }
 
         default:
             return state;

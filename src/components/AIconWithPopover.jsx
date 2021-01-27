@@ -1,6 +1,6 @@
 import { Popover, Button } from 'antd'
 import React from 'react'
-import { AIcon1 } from '../icons/ablilty'
+import { AIcon1, AIcon2 } from '../icons/ablilty'
 
 class AIconWithPopover extends React.Component {
     constructor(props) {
@@ -30,7 +30,7 @@ class AIconWithPopover extends React.Component {
                     }}
                     shape="circle"
                     icon={
-                        <AIcon1 style={{
+                        <AIcon2 style={{
                             width: '48px',
                             height: '48px',
                             marginTop: -3,

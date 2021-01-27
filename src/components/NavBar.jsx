@@ -1,5 +1,6 @@
 import React from 'react'
 import LogoZone from './LogoZone.jsx'
+import GoBack from './GoBack.jsx'
 import { Input, Button } from 'antd';
 import { SettingOutlined, SearchOutlined } from '@ant-design/icons';
 import UserMenu from './UserMenu.jsx';
@@ -30,7 +31,7 @@ class NavBar extends React.Component {
     render() {
         return (
             <div style={style.root}>
-                <LogoZone />
+                <GoBack />
                 <div style={{
                     width: '100%',
                     display: 'flex',

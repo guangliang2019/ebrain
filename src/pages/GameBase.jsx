@@ -67,11 +67,6 @@ class GameBase extends React.Component {
     }
 
 
-    async getData2() {
-        postRequset("game/recommended")
-            .then((result) => { console.log(result) })
-    }
-
     async getData() {
 
         await postRequset("game/recommended")
@@ -93,7 +88,7 @@ class GameBase extends React.Component {
         gameList.forEach(element => {
             games.push(
                 <GameCard
-                    key = {element.gid}
+                    key={element.gid}
                     gameid={element.gid}
                     title={element.gname}
                 />
@@ -104,7 +99,6 @@ class GameBase extends React.Component {
     render() {
         if (this.state.isLoading) {
             this.getData()
-            this.getData2()
             return (
                 <div style={{
                     width: '920px',
