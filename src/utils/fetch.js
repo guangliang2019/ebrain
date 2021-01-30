@@ -16,13 +16,13 @@ let timeOut = 60000;
 const protocol = "http://"
 const adress = "39.100.11.92:"
 const port = "8080"
-const version = ""
+//const version = "/Ebrain-1.0"
 //http://39.101.129.59:8080/Ebrain-1.0/game/listAll
 
 let TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDAwODAwMDEsInVzZXJJZCI6IjE4ZTdmYjY1LTZlNjAtNDQ2YS04MTBlLWZlOTg1ZWM1ZWE3OSJ9.egdLGA3TCoGm1V6Nd50Hcklha03ZRPP1Qrrdq7MAzE4"
 
 //开发地址
-const SERVER_BASE = protocol + adress + port + version;
+const SERVER_BASE = protocol + adress + port;
 
 /**
  * 数据请求生成函数

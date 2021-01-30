@@ -1,8 +1,9 @@
 import React from 'react'
 import LogoZone from './LogoZone.jsx'
 import { Input, Button } from 'antd';
-import { SettingOutlined, SearchOutlined } from '@ant-design/icons';
+import { SettingOutlined, SearchOutlined,DownloadOutlined } from '@ant-design/icons';
 import UserMenu from './UserMenu.jsx';
+import { Link } from 'react-router-dom';
 
 const style = {
     root: {
@@ -47,7 +48,7 @@ class NavBar extends React.Component {
                         style={{
                             color: '#BFBFBF',
                             fontSize: 24,
-                            width: '80%',
+                            width: '70%',
                             marginLeft: '8px'
                         }}
 
@@ -59,6 +60,28 @@ class NavBar extends React.Component {
                             justifyContent: 'center',
                             alignItems: 'center',
                         }}>
+                        <Link to = "/Download">
+                        <Button
+                            className="button"
+                            style={{
+                                border: 'none',
+                                backgroundColor: 'transparent'
+                            }}
+                            shape="circle"
+                            icon={<DownloadOutlined
+                                className="button"
+                                style={{
+                                    boxShadow:'none',
+                                    marginTop: 2,
+                                    fontSize: '24px',
+                                    color: '#BFBFBF',
+                                    '&:hover > $button': {
+                                        color: '#FFFFFF'
+                                    },
+                                }}
+                            />} />
+                        </Link>
+                        <div style={style.divider} />
                         <Button
                             className="button"
                             style={{
@@ -77,7 +100,6 @@ class NavBar extends React.Component {
                                     },
                                 }}
                             />} />
-
                         <div style={style.divider} />
                         <UserMenu />
                     </div>

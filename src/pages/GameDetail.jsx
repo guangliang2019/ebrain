@@ -4,6 +4,9 @@ import TrainAbility from '../components/TrainAbility.jsx'
 import { DownloadOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 
+const {ipcRenderer} = window.require('electron')
+const {app} = window.require('electron')
+let downloadsPath = 'H:\\download\\'
 
 const styles = {
     root: {
@@ -19,8 +22,9 @@ class GameDetail extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-
         }
+    }
+    componentDidMount(){
     }
     render() {
         return (
@@ -32,7 +36,13 @@ class GameDetail extends React.Component {
                         width="851px"
                         height="280px"
                     />
-                    <Button style={{ marginTop: '16px', marginLeft: '17px', width: '152px', height: '48px', borderRadius: '3px' }} type="primary" icon={<DownloadOutlined />}>安装</Button>
+                    <Button style={{ marginTop: '16px', marginLeft: '17px', width: '152px', height: '48px', borderRadius: '3px' }} 
+                    type="primary" 
+                    icon={<DownloadOutlined />}
+                    onClick={()=>{
+                        var a = "H:\\MC\\呜！苦路西！Beta1.1.zip"
+                        ipcRenderer.send('download',a + "+" + app.getPath('downloads'))
+                    }}>安装</Button>
                 </div>
                 <div style={{ width: '851px', display: 'flex', flexDirection: 'column', marginTop: '32px', marginLeft: '34px', }}>
                     <div style={{ display: 'flex', alignItems: 'center',fontSize:'20px',color:'#030852',fontWeight:'bold',marginBottom:'20px'}}>
