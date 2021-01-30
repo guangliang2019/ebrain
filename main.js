@@ -1,9 +1,12 @@
 // 引入electron并创建一个Browserwindow
-const { app, BrowserWindow } = require('electron')
+const {app , BrowserWindow , webContents, session} = require('electron')
 const path = require('path')
 const url = require('url')
+const {ipcMain} = require('electron')
+var fs = require('fs')
 // 保持window对象的全局引用,避免JavaScript对象被垃圾回收时,窗口被自动关闭.
 let mainWindow
+let downloadpath
 function createWindow() {
     //创建浏览器窗口,宽高自定义具体大小你开心就好
 
@@ -17,6 +20,12 @@ function createWindow() {
         allowRunningInsecureContent: true,
         experimentalCanvasFeatures: true,
         resizable: false,
+        webPreferences: {
+            nodeIntegration: true, // 是否集成 Nodejs
+        },
+        webContents: {
+            openDevTools: true,
+        }
     })
     /* 
     * 加载应用----- electron-quick-start中默认的加载入口
@@ -35,6 +44,83 @@ function createWindow() {
     mainWindow.on('closed', function () {
         mainWindow = null
     })
+    session.defaultSession.on('will-download', (event, item) => {
+        const fileName = item.getFilename();
+        const url = item.getURL();
+        const startTime = item.getStartTime();
+        const initialState = item.getState();
+        const downloadPath = "H:/Download/";
+        let savePath = path.join(downloadPath, fileName);
+        const ext = path.extname(savePath);
+        const name = path.basename(savePath, ext);
+        const dir = path.dirname(savePath);
+        let fileNum = 0
+        while (fs.existsSync(savePath)) {
+            fileNum += 1;
+            savePath = path.format({
+              dir,
+              name: `${name}(${fileNum})`,
+              ext,
+            });
+        }
+        item.setSavePath(savePath);
+        mainWindow.webContents.send('new-download-item', {
+            savePath,
+            url,
+            startTime,
+            state: initialState,
+            paused: item.isPaused(),
+            totalBytes: item.getTotalBytes(),
+            receivedBytes: item.getReceivedBytes(),
+            filename: fileName,
+        });
+        item.on('updated', (e, state) => {
+            if (state === 'interrupted'){}
+            else if (state === 'progressing'){
+                ipcMain.on('pause',(event) => {
+                    item.pause()
+                    mainWindow.webContents.send('download-item-updated', {
+                        paused: item.isPaused(),
+                    })
+                })
+                ipcMain.on('cancel',(event) => {
+                    item.cancel()
+                    mainWindow.webContents.send('download-item-updated', {
+                        startTime,
+                        state,
+                        totalBytes: 0,
+                        receivedBytes: 1,
+                        paused: item.isPaused(),
+                        filename: item.getFilename(),
+                    })
+                })
+                if(item.isPaused()){
+                    ipcMain.once('resume',(event) => {
+                        if(item.canResume()){
+                            item.resume()
+                        }
+                        else{}
+                    })
+                }
+                else{
+                    mainWindow.webContents.send('download-item-updated', {
+                        startTime,
+                        state,
+                        totalBytes: item.getTotalBytes(),
+                        receivedBytes: item.getReceivedBytes(),
+                        paused: item.isPaused(),
+                        filename: item.getFilename(),
+                      })
+                }
+            }
+        });
+        item.on('done', (e, state) => {
+            mainWindow.webContents.send('download-item-done', {
+              startTime,
+              state,
+            });
+        });
+    })
 }
 // 当 Electron 完成初始化并准备创建浏览器窗口时调用此方法
 app.on('ready', createWindow)
@@ -52,3 +138,9 @@ app.on('activate', function () {
     }
 })
 // 你可以在这个脚本中续写或者使用require引入独立的js文件.
+ipcMain.on('download',(event,args) => {
+    var arr= args.split("+")
+    downloadpath = arr[0]
+    mainWindow.webContents.downloadURL(downloadpath)
+    //触发will-download事件
+})
