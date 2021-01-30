@@ -23,7 +23,6 @@ class Main extends React.Component {
                 <Route path="/GameBase" component={GameBase} />
                 <Route path="/Report" component={Report} />
                 <Route path="/Detail" component={GameDetail} />
-                {/* <GameBase /> */}
             </div>
         )
     }

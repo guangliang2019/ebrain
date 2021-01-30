@@ -1,7 +1,12 @@
 import * as Types from '../../actions/actionTypes.js';
 
 const initialState = {
-    history: [],
+    history: [
+        {
+            adress: '/default',
+            state: {},
+        }
+    ],
     flag: 0,
     length: 0,
 };
