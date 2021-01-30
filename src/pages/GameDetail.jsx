@@ -5,7 +5,6 @@ import { DownloadOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 
 const {ipcRenderer} = window.require('electron')
-const {app} = window.require('electron')
 let downloadsPath = 'H:\\download\\'
 
 const styles = {
@@ -41,7 +40,7 @@ class GameDetail extends React.Component {
                     icon={<DownloadOutlined />}
                     onClick={()=>{
                         var a = "H:\\MC\\呜！苦路西！Beta1.1.zip"
-                        ipcRenderer.send('download',a + "+" + app.getPath('downloads'))
+                        ipcRenderer.send('download',a + "+" + downloadsPath)
                     }}>安装</Button>
                 </div>
                 <div style={{ width: '851px', display: 'flex', flexDirection: 'column', marginTop: '32px', marginLeft: '34px', }}>
