@@ -1,8 +1,8 @@
 // 引入electron并创建一个Browserwindow
-const {app , BrowserWindow , webContents, session} = require('electron')
+const { app, BrowserWindow, webContents, session } = require('electron')
 const path = require('path')
 const url = require('url')
-const {ipcMain} = require('electron')
+const { ipcMain } = require('electron')
 var fs = require('fs')
 // 保持window对象的全局引用,避免JavaScript对象被垃圾回收时,窗口被自动关闭.
 let mainWindow
@@ -12,7 +12,7 @@ function createWindow() {
 
     mainWindow = new BrowserWindow({
         width: 1440,
-        height: 1024 + 40,
+        height: 1024,
         transparent: true,
         icon: './favicon.ico',
         //frame: false,
@@ -58,9 +58,9 @@ function createWindow() {
         while (fs.existsSync(savePath)) {
             fileNum += 1;
             savePath = path.format({
-              dir,
-              name: `${name}(${fileNum})`,
-              ext,
+                dir,
+                name: `${name}(${fileNum})`,
+                ext,
             });
         }
         item.setSavePath(savePath);
@@ -75,15 +75,15 @@ function createWindow() {
             filename: fileName,
         });
         item.on('updated', (e, state) => {
-            if (state === 'interrupted'){}
-            else if (state === 'progressing'){
-                ipcMain.on('pause',(event) => {
+            if (state === 'interrupted') { }
+            else if (state === 'progressing') {
+                ipcMain.on('pause', (event) => {
                     item.pause()
                     mainWindow.webContents.send('download-item-updated', {
                         paused: item.isPaused(),
                     })
                 })
-                ipcMain.on('cancel',(event) => {
+                ipcMain.on('cancel', (event) => {
                     item.cancel()
                     mainWindow.webContents.send('download-item-updated', {
                         startTime,
@@ -94,15 +94,15 @@ function createWindow() {
                         filename: item.getFilename(),
                     })
                 })
-                if(item.isPaused()){
-                    ipcMain.once('resume',(event) => {
-                        if(item.canResume()){
+                if (item.isPaused()) {
+                    ipcMain.once('resume', (event) => {
+                        if (item.canResume()) {
                             item.resume()
                         }
-                        else{}
+                        else { }
                     })
                 }
-                else{
+                else {
                     mainWindow.webContents.send('download-item-updated', {
                         startTime,
                         state,
@@ -110,14 +110,14 @@ function createWindow() {
                         receivedBytes: item.getReceivedBytes(),
                         paused: item.isPaused(),
                         filename: item.getFilename(),
-                      })
+                    })
                 }
             }
         });
         item.on('done', (e, state) => {
             mainWindow.webContents.send('download-item-done', {
-              startTime,
-              state,
+                startTime,
+                state,
             });
         });
     })
@@ -138,8 +138,8 @@ app.on('activate', function () {
     }
 })
 // 你可以在这个脚本中续写或者使用require引入独立的js文件.
-ipcMain.on('download',(event,args) => {
-    var arr= args.split("+")
+ipcMain.on('download', (event, args) => {
+    var arr = args.split("+")
     downloadpath = arr[0]
     mainWindow.webContents.downloadURL(downloadpath)
     //触发will-download事件
