@@ -6,13 +6,13 @@ import { connect } from 'react-redux'
 
 const {ipcRenderer} = window.require('electron')
 let path = ''
-let lastpath = ''
 
 class Download extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             downloadPath: this.props.download.downloadPath,
+            fontcolor: '',
         }
     }
     componentDidMount() {
@@ -92,7 +92,24 @@ class Download extends React.Component {
                         marginLeft: 50,
                         marginTop: '14px',
                     }}>
-                        下载目录：<button onClick  = {Update}>{this.state.downloadPath}</button>     
+                        下载目录：
+                        <text
+                        style = {{
+                            cursor: 'pointer',
+                            color: this.state.fontcolor,
+                        }} 
+                        onClick = {Update}
+                        onMouseEnter = {() => {
+                            this.setState({
+                                fontcolor: 'blue'
+                            })
+                        }}
+                        onMouseOut = {() => {
+                            this.setState({
+                                fontcolor: 'black'
+                            })
+                        }}
+                        ><u>{this.state.downloadPath}</u></text>     
                     </div>
                 </div>
                 <div>
