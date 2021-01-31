@@ -2,7 +2,7 @@
 const {app , BrowserWindow , webContents, session} = require('electron')
 const path = require('path')
 const url = require('url')
-const {ipcMain} = require('electron')
+const {ipcMain,dialog} = require('electron')
 var fs = require('fs')
 // 保持window对象的全局引用,避免JavaScript对象被垃圾回收时,窗口被自动关闭.
 let mainWindow
@@ -143,4 +143,13 @@ ipcMain.on('download',(event,args) => {
     downloadpath = arr[0]
     mainWindow.webContents.downloadURL(downloadpath)
     //触发will-download事件
+})
+ipcMain.on('dialog',(event) => {
+    const paths = dialog.showOpenDialogSync({
+        title: '选择文件存放目录',
+        properties: ['openDirectory'],
+    })
+    if (paths && paths.length){
+        mainWindow.webContents.send('downloadPath',paths[0])
+    }
 })

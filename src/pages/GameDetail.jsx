@@ -23,8 +23,6 @@ class GameDetail extends React.Component {
         this.state = {
         }
     }
-    componentDidMount(){
-    }
     render() {
         return (
             <div style={styles.root}>
@@ -40,7 +38,7 @@ class GameDetail extends React.Component {
                     icon={<DownloadOutlined />}
                     onClick={()=>{
                         var a = "H:\\MC\\呜！苦路西！Beta1.1.zip"
-                        ipcRenderer.send('download',a + "+" + downloadsPath)
+                        ipcRenderer.send('download',a + "+" + this.props.download.downloadsPath)
                     }}>安装</Button>
                 </div>
                 <div style={{ width: '851px', display: 'flex', flexDirection: 'column', marginTop: '32px', marginLeft: '34px', }}>
