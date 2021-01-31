@@ -2,11 +2,7 @@
 const { app, BrowserWindow, webContents, session } = require('electron')
 const path = require('path')
 const url = require('url')
-<<<<<<< HEAD
 const {ipcMain,dialog} = require('electron')
-=======
-const { ipcMain } = require('electron')
->>>>>>> ca8d44e5fd6f3f844c2b1668ab3107989a67a592
 var fs = require('fs')
 // 保持window对象的全局引用,避免JavaScript对象被垃圾回收时,窗口被自动关闭.
 let mainWindow

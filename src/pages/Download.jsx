@@ -2,16 +2,19 @@ import React from 'react'
 import Downloading from '../components/Downloading.jsx'
 import {Button} from 'antd'
 import {CaretRightOutlined,PauseOutlined} from '@ant-design/icons'
-import { connect } from 'react-redux'
 
 const {ipcRenderer} = window.require('electron')
-let path = ''
+let path = 'C:\\'
+let downloadItem = []
+
+ipcRenderer.on('new-download-item',(event,item) => {
+    downloadItem.push(<Downloading/>)
+})
 
 class Download extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            downloadPath: this.props.download.downloadPath,
             fontcolor: '',
         }
     }
@@ -21,10 +24,9 @@ class Download extends React.Component {
                 path = args
             })
             if(path){
-                this.props.updatedownloadPath(path)
-                this.setState({
-                    downloadPath: path,
-                })
+                if(localStorage.getItem('download') === null||path !== 'C:\\'){
+                    localStorage.setItem('download',path)
+                }
             }
         },500)
     }
@@ -109,29 +111,15 @@ class Download extends React.Component {
                                 fontcolor: 'black'
                             })
                         }}
-                        ><u>{this.state.downloadPath}</u></text>     
+                        ><u>{localStorage.getItem('download')}</u></text>     
                     </div>
                 </div>
                 <div>
-                    <Downloading />
+                    {downloadItem}
                 </div>
             </>
         )
     }
 }
 
-const mapStateToProps = (state) => {
-    return state;
-}
-const mapDispatchToProps = (dispatch) => {
-    return {
-        updatedownloadPath: (downloadPath) => {
-            dispatch({
-                type: 'UPDATE_DOWNLOAD',
-                data: { downloadPath: downloadPath }
-            })
-        },
-    };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Download)
+export default Download

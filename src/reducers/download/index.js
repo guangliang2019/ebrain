@@ -1,7 +1,7 @@
 import * as Types from '../../actions/actionTypes.js';
 
 const initialState = {
-    downloadPath: 'H:\\download\\'
+    downloadPath: 'H:\\Download\\'
 };
 
 export default function download(state = initialState, action) {
