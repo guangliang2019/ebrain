@@ -8,7 +8,16 @@ let path = 'C:\\'
 let downloadItem = []
 
 ipcRenderer.on('new-download-item',(event,item) => {
-    downloadItem.push(<Downloading/>)
+    downloadItem.push(
+    <Downloading
+    style = {{
+        marginTop: 30,
+    }}
+    StartTime = {item.startTime}
+    TotalBytes = {item.totalBytes}
+    ReceivedBytes = {item.receivedBytes}
+    FileName = {item.filename}
+    />)
 })
 
 class Download extends React.Component {

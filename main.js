@@ -72,34 +72,41 @@ function createWindow() {
             paused: item.isPaused(),
             totalBytes: item.getTotalBytes(),
             receivedBytes: item.getReceivedBytes(),
-            filename: fileName,
+            filename: name,
         });
         item.on('updated', (e, state) => {
             if (state === 'interrupted') { }
             else if (state === 'progressing') {
-                ipcMain.on('pause', (event) => {
-                    item.pause()
-                    mainWindow.webContents.send('download-item-updated', {
-                        paused: item.isPaused(),
-                    })
+                ipcMain.on('pause', (event,sth) => {
+                    if(sth.StartTime === startTime){
+                        item.pause()
+                        mainWindow.webContents.send('download-item-updated', {
+                            startTime,
+                            paused: item.isPaused(),
+                        })
+                    }
                 })
-                ipcMain.on('cancel', (event) => {
-                    item.cancel()
-                    mainWindow.webContents.send('download-item-updated', {
-                        startTime,
-                        state,
-                        totalBytes: 0,
-                        receivedBytes: 1,
-                        paused: item.isPaused(),
-                        filename: item.getFilename(),
-                    })
+                ipcMain.on('cancel', (event,sth) => {
+                    if(sth.StartTime === startTime){
+                        item.cancel()
+                        mainWindow.webContents.send('download-item-updated', {
+                            startTime,
+                            state,
+                            totalBytes: 0,
+                            receivedBytes: 1,
+                            paused: item.isPaused(),
+                            filename: item.getFilename(),
+                        })
+                    }
                 })
                 if (item.isPaused()) {
-                    ipcMain.once('resume', (event) => {
-                        if (item.canResume()) {
-                            item.resume()
+                    ipcMain.once('resume', (event,sth) => {
+                        if(sth.StartTime === startTime){
+                            if (item.canResume()) {
+                                item.resume()
+                            }
+                            else { }
                         }
-                        else { }
                     })
                 }
                 else {
