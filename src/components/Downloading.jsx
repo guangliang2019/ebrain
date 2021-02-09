@@ -1,35 +1,44 @@
 import React from 'react'
 import {Progress,Button} from 'antd'
 import {CaretRightOutlined,PauseOutlined,DeleteOutlined} from '@ant-design/icons'
+import {connect} from 'react-redux'
+
 const {ipcRenderer} = window.require('electron')
 let ReceivedBytes = ''
 let LastReceivedBytes = ''
 let DownloadSpeed = ''
 let Speed = ''
-let startTime = ''
+let startTIME = ''
 let Message = ''
 let ifDone = 0
+let Pause = 0
+let lastPause = -1
+let ifChange = 0
 
 class Downloading extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            receivedBytes: '',
+            receivedBytes: this.props.download.Done[this.props.id].ifDone === 1?this.props.TotalBytes:'',
             lastreceivedBytes: LastReceivedBytes,
             speed: Speed,
             ifPause: 0,
             ifDone: 0,
-            message: '',
+            message: this.props.download.Done[this.props.id].ifDone === 1?'已完成':'',
         }
     }
     componentDidMount(){
-        let ifOver = setInterval(() => {
-            if(this.state.receivedBytes === this.props.TotalBytes){
-                ifDone = 1
+        ipcRenderer.on('download-item-done',(event,item) => {
+            if(localStorage.getItem(this.props.id.toFixed()) == item.startTime){
+                ReceivedBytes = this.props.TotalBytes
+                this.setState({
+                    ifDone: 1,
+                })
             }
-            ipcRenderer.on('download-item-updated',(event,item) => {
-                if(this.props.StartTime === item.startTime){
-                    startTime = item.startTime
+        })
+        let ifOver = setInterval(() => {
+            ipcRenderer.on('download-item-updated',(event,item) => { 
+                startTIME = item.startTime
                     ReceivedBytes = item.receivedBytes
                     LastReceivedBytes = this.state.lastreceivedBytes
                     DownloadSpeed = ReceivedBytes - LastReceivedBytes
@@ -45,30 +54,60 @@ class Downloading extends React.Component {
                     }else{
                         Speed = 'MB/s'
                     }
-                }
             })
-            if(startTime === this.props.StartTime){
-                if(ifDone === 1){
-                    Message = '已完成'
-                }
-                else{
-                    if(this.state.ifPause === 0){
-                        Message = (DownloadSpeed/1).toFixed(2)+this.state.speed
+            if(this.props.download.Done[this.props.id].ifDone === 0){
+                if(localStorage.getItem(this.props.id.toFixed()) == startTIME){
+                    if(this.state.ifDone === 1){
+                        this.props.updateifDone(this.props.id)
+                        Message = '已完成'
                     }
                     else{
-                        Message = '已暂停'
+                        ifChange = 0
+                        if(lastPause != localStorage.getItem('pause') && localStorage.getItem('pause') != -1){
+                            ifChange = 1
+                            Pause = localStorage.getItem('pause')
+                            lastPause = Pause
+                            if(localStorage.getItem('pause') == 1){
+                                ipcRenderer.send('pause',{StartTime: this.props.StartTime})
+                            }
+                            else{
+                                ipcRenderer.send('resume',{StartTime: this.props.StartTime})
+                            }
+                        }
+                        else{
+                            Pause = this.state.ifPause
+                        }
+                        if(Pause === 0){
+                            Message = (DownloadSpeed/1).toFixed(2)+this.state.speed
+                        }
+                        else if(Pause === 1){
+                            Message = '已暂停'
+                        }
+                    }
+                    if(ifChange === 1){
+                        this.setState({
+                            receivedBytes: ReceivedBytes,
+                            lastreceivedBytes: LastReceivedBytes,
+                            speed: Speed,
+                            message: Message,
+                            ifPause: Pause,
+                        })
+                    }
+                    else{
+                        this.setState({
+                            receivedBytes: ReceivedBytes,
+                            lastreceivedBytes: LastReceivedBytes,
+                            speed: Speed,
+                            message: Message,
+                            ifPause: Pause,
+                        })
                     }
                 }
-                this.setState({
-                    receivedBytes: ReceivedBytes,
-                    lastreceivedBytes: LastReceivedBytes,
-                    speed: Speed,
-                    message: Message
-                })
             }
-        },50)
+        },100)
     }
     render() {
+        console.log(this.props.download.Done[this.props.id].ifDone)
         return (
             <>
                 <div style = {{
@@ -88,7 +127,6 @@ class Downloading extends React.Component {
                         marginLeft: '5px',
                         marginTop: '25px',
                         width: '150px',
-
                     }}>{this.state.message}</div>
                     <div style = {{
                         width: 100,
@@ -174,4 +212,18 @@ class Downloading extends React.Component {
     }
 }
 
-export default Downloading
+const mapStateToProps = (state) => {
+    return state;
+}
+const mapDispatchToProps = (dispatch) => {
+    return {
+        updateifDone: (Index) => {
+            dispatch({
+                type: 'UPDATE_IFDONE',
+                data: {Index: Index}
+            })
+        },
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Downloading)

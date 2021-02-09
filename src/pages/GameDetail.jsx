@@ -37,8 +37,9 @@ class GameDetail extends React.Component {
                     type="primary" 
                     icon={<DownloadOutlined />}
                     onClick={()=>{
+                        this.props.addifDone()
                         var a = "H:\\MC\\呜！苦路西！Beta1.1.zip"
-                        ipcRenderer.send('download',a + "+" + this.props.download.downloadsPath)
+                        ipcRenderer.send('download',a + "+" + localStorage.getItem('download'))
                     }}>安装</Button>
                 </div>
                 <div style={{ width: '851px', display: 'flex', flexDirection: 'column', marginTop: '32px', marginLeft: '34px', }}>
@@ -71,6 +72,11 @@ const mapDispatchToProps = (dispatch) => {
             dispatch({
                 type: 'UPDATE_GAMEKEY',
                 data: { newKey: newKey }
+            })
+        },
+        addifDone: () => {
+            dispatch({
+                type: 'ADD_IFDONE',
             })
         },
     };

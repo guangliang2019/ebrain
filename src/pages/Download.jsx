@@ -2,22 +2,29 @@ import React from 'react'
 import Downloading from '../components/Downloading.jsx'
 import {Button} from 'antd'
 import {CaretRightOutlined,PauseOutlined} from '@ant-design/icons'
+import {connect} from 'react-redux'
 
 const {ipcRenderer} = window.require('electron')
-let path = 'C:\\'
+let path = ''
 let downloadItem = []
+let num = 0
+let ifUpdate
 
 ipcRenderer.on('new-download-item',(event,item) => {
+    localStorage.setItem(num.toFixed(),item.startTime)
     downloadItem.push(
     <Downloading
     style = {{
         marginTop: 30,
     }}
+    id = {num}
+    key = {num}
     StartTime = {item.startTime}
     TotalBytes = {item.totalBytes}
     ReceivedBytes = {item.receivedBytes}
     FileName = {item.filename}
     />)
+    num += 1
 })
 
 class Download extends React.Component {
@@ -25,19 +32,30 @@ class Download extends React.Component {
         super(props)
         this.state = {
             fontcolor: '',
+            downloadpath: '',
         }
     }
     componentDidMount() {
-        let ifUpdate = setInterval(() => {
+        ifUpdate = setInterval(() => {
             ipcRenderer.on('downloadPath',(event,args) => {
                 path = args
             })
             if(path){
-                if(localStorage.getItem('download') === null||path !== 'C:\\'){
-                    localStorage.setItem('download',path)
-                }
+                localStorage.setItem('download',path)
             }
+            if(localStorage.getItem('download') === null){
+                localStorage.setItem('download','C:\\')
+            }
+            this.setState({
+                downloadpath: localStorage.getItem('download')
+            })
         },500)
+    }
+    componentWillUnmount() {
+        clearInterval(ifUpdate)
+        this.setState = function(){
+            return null
+        }
     }
     render() {
         const Update = () => {
@@ -62,6 +80,8 @@ class Download extends React.Component {
                             backgroundColor: 'transparent',
                         }}
                         onClick = {() => {
+                            localStorage.setItem('pause',0)
+                            this.props.updatedownloadState(0)
                         }}
                         icon={<CaretRightOutlined
                             className="button"
@@ -71,7 +91,7 @@ class Download extends React.Component {
                                 color: 'black',
                             }}
                         />}>
-                        <text>全部开始</text>
+                        全部开始
                     </Button>
                     <Button
                         className="button"
@@ -85,6 +105,8 @@ class Download extends React.Component {
                             backgroundColor: 'transparent',
                         }}
                         onClick = {() => {
+                            localStorage.setItem('pause',1)
+                            this.props.updatedownloadState(1)
                         }}
                         icon={<PauseOutlined
                             className="button"
@@ -97,7 +119,7 @@ class Download extends React.Component {
                                 },
                             }}
                         />}>
-                        <text>全部停止</text>
+                        全部暂停
                     </Button>
                     <div style = {{
                         marginLeft: 50,
@@ -131,4 +153,18 @@ class Download extends React.Component {
     }
 }
 
-export default Download
+const mapStateToProps = (state) => {
+    return state;
+}
+const mapDispatchToProps = (dispatch) => {
+    return {
+        updatedownloadState: (newState) => {
+            dispatch({
+                type: 'UPDATE_DOWNLOAD',
+                data: { AllPause: newState }
+            })
+        },
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Download)

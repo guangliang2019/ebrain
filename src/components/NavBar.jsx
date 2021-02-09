@@ -4,6 +4,7 @@ import { Input, Button } from 'antd';
 import { SettingOutlined, SearchOutlined,DownloadOutlined } from '@ant-design/icons';
 import UserMenu from './UserMenu.jsx';
 import { Link } from 'react-router-dom';
+import {connect} from 'react-redux'
 
 const style = {
     root: {
@@ -28,6 +29,11 @@ const style = {
 }
 
 class NavBar extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+        }
+    }
     render() {
         return (
             <div style={style.root}>
@@ -66,6 +72,10 @@ class NavBar extends React.Component {
                             style={{
                                 border: 'none',
                                 backgroundColor: 'transparent'
+                            }}
+                            onClick = {() => {
+                                localStorage.setItem('pause',-1)
+                                this.props.updatedownloadState(-1)
                             }}
                             shape="circle"
                             icon={<DownloadOutlined
@@ -110,4 +120,18 @@ class NavBar extends React.Component {
     }
 }
 
-export default NavBar
+const mapStateToProps = (state) => {
+    return state;
+}
+const mapDispatchToProps = (dispatch) => {
+    return {
+        updatedownloadState: (newState) => {
+            dispatch({
+                type: 'UPDATE_DOWNLOAD',
+                data: { AllPause: newState }
+            })
+        },
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar)

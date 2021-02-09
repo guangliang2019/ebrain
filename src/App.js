@@ -5,10 +5,8 @@ import Main from './components/Main.jsx'
 import RightBar from './components/RightBar';
 import { ScrollView } from "@cantonjs/react-scroll-view";
 import { BrowserRouter as Router } from "react-router-dom";
-import {connect} from 'react-redux'
-import downloadStatus from './reducers/gameStatus/index'
 
-function App() {
+export default function App() {
   return (
     <Router >
       <div style={{ height: '100vh', background: "rgba(0,0,0,0)" }}>
@@ -40,21 +38,3 @@ function App() {
     </Router>
   );
 }
-const mapStateToProps = (state) => {
-  return state;
-}
-const mapDispatchToProps = (dispatch) => {
-  return {
-      updateDownload: (download, downloadurl) => {
-          dispatch({
-              type: 'UPDATE_DOWNLOAD',
-              data: { 
-                download: download,
-                downloadurl: downloadurl 
-              }
-          })
-      },
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App)

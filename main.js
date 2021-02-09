@@ -7,6 +7,7 @@ var fs = require('fs')
 // 保持window对象的全局引用,避免JavaScript对象被垃圾回收时,窗口被自动关闭.
 let mainWindow
 let downloadpath
+let loadpath
 function createWindow() {
     //创建浏览器窗口,宽高自定义具体大小你开心就好
 
@@ -49,7 +50,7 @@ function createWindow() {
         const url = item.getURL();
         const startTime = item.getStartTime();
         const initialState = item.getState();
-        const downloadPath = "H:/Download/";
+        const downloadPath = loadpath;
         let savePath = path.join(downloadPath, fileName);
         const ext = path.extname(savePath);
         const name = path.basename(savePath, ext);
@@ -148,6 +149,7 @@ app.on('activate', function () {
 ipcMain.on('download', (event, args) => {
     var arr = args.split("+")
     downloadpath = arr[0]
+    loadpath = arr[1]
     mainWindow.webContents.downloadURL(downloadpath)
     //触发will-download事件
 })

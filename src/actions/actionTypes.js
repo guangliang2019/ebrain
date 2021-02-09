@@ -9,5 +9,6 @@ export const SET_USER_INFO = 'SET_USER_INFO';
 export const UPDATE_GAMEKEY = 'UPDATE_GAMEKEY';
 //设置下载路径
 export const UPDATE_DOWNLOAD = 'UPDATE_DOWNLOAD';
-
+export const UPDATE_IFDONE = 'UPDATE_IFDONE';
+export const ADD_IFDONE = 'ADD_IFDONE';
 
