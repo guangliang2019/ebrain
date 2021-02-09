@@ -4,62 +4,62 @@ import {CaretRightOutlined,PauseOutlined,DeleteOutlined} from '@ant-design/icons
 import {connect} from 'react-redux'
 
 const {ipcRenderer} = window.require('electron')
-let ReceivedBytes = ''
-let LastReceivedBytes = ''
-let DownloadSpeed = ''
-let Speed = ''
-let startTIME = ''
-let Message = ''
-let ifDone = 0
-let Pause = 0
-let lastPause = -1
-let ifChange = 0
 
 class Downloading extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             receivedBytes: this.props.download.Done[this.props.id].ifDone === 1?this.props.TotalBytes:'',
-            lastreceivedBytes: LastReceivedBytes,
-            speed: Speed,
+            lastreceivedBytes: 0,
+            speed: '',
             ifPause: 0,
             ifDone: 0,
             message: this.props.download.Done[this.props.id].ifDone === 1?'已完成':'',
         }
     }
     componentDidMount(){
+        let ReceivedBytes = ''
+        let LastReceivedBytes = ''
+        let DownloadSpeed = ''
+        let Speed = ''
+        let startTIME = ''
+        let Message = ''
+        let Pause = 0
+        let lastPause = -1
+        let ifChange = 0
         ipcRenderer.on('download-item-done',(event,item) => {
             if(localStorage.getItem(this.props.id.toFixed()) == item.startTime){
                 ReceivedBytes = this.props.TotalBytes
+                this.props.updateifDone(this.props.id)
                 this.setState({
                     ifDone: 1,
+                    message: '已完成',
+                    receivedBytes: ReceivedBytes,
                 })
             }
         })
         let ifOver = setInterval(() => {
             ipcRenderer.on('download-item-updated',(event,item) => { 
                 startTIME = item.startTime
-                    ReceivedBytes = item.receivedBytes
-                    LastReceivedBytes = this.state.lastreceivedBytes
-                    DownloadSpeed = ReceivedBytes - LastReceivedBytes
-                    LastReceivedBytes = ReceivedBytes
-                    DownloadSpeed = DownloadSpeed*2/(1024*1024)
+                ReceivedBytes = item.receivedBytes
+                LastReceivedBytes = this.state.lastreceivedBytes
+                DownloadSpeed = ReceivedBytes - LastReceivedBytes
+                LastReceivedBytes = ReceivedBytes
+                DownloadSpeed = DownloadSpeed*2/(1024*1024)
+                if(DownloadSpeed < 1){
+                    DownloadSpeed *= 1024
+                    Speed = 'KB/s'
                     if(DownloadSpeed < 1){
                         DownloadSpeed *= 1024
-                        Speed = 'KB/s'
-                        if(DownloadSpeed < 1){
-                            DownloadSpeed *= 1024
-                            Speed = 'b/s'
-                        }
-                    }else{
-                        Speed = 'MB/s'
+                        Speed = 'b/s'
                     }
+                }else{
+                    Speed = 'MB/s'
+                }
             })
             if(this.props.download.Done[this.props.id].ifDone === 0){
                 if(localStorage.getItem(this.props.id.toFixed()) == startTIME){
                     if(this.state.ifDone === 1){
-                        this.props.updateifDone(this.props.id)
-                        Message = '已完成'
                     }
                     else{
                         ifChange = 0
@@ -78,7 +78,7 @@ class Downloading extends React.Component {
                             Pause = this.state.ifPause
                         }
                         if(Pause === 0){
-                            Message = (DownloadSpeed/1).toFixed(2)+this.state.speed
+                            Message = (DownloadSpeed/1).toFixed(2)+Speed
                         }
                         else if(Pause === 1){
                             Message = '已暂停'
@@ -104,10 +104,9 @@ class Downloading extends React.Component {
                     }
                 }
             }
-        },100)
+        },50)
     }
     render() {
-        console.log(this.props.download.Done[this.props.id].ifDone)
         return (
             <>
                 <div style = {{
