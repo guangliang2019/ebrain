@@ -80,7 +80,6 @@ class Download extends React.Component {
                             backgroundColor: 'transparent',
                         }}
                         onClick = {() => {
-                            localStorage.setItem('pause',0)
                             this.props.updatedownloadState(0)
                             ipcRenderer.send('AllResume')
                         }}
@@ -106,7 +105,6 @@ class Download extends React.Component {
                             backgroundColor: 'transparent',
                         }}
                         onClick = {() => {
-                            localStorage.setItem('pause',1)
                             this.props.updatedownloadState(1)
                             ipcRenderer.send('AllPause')
                         }}
