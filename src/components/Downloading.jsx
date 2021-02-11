@@ -14,6 +14,7 @@ class Downloading extends React.Component {
             speed: '',
             ifPause: 0,
             ifDone: 0,
+            lastPause: -1,
             message: this.props.download.Done[this.props.id].ifDone === 1?'已完成':'',
         }
     }
@@ -25,8 +26,6 @@ class Downloading extends React.Component {
         let startTIME = ''
         let Message = ''
         let Pause = 0
-        let lastPause = -1
-        let ifChange = 0
         ipcRenderer.on('download-item-done',(event,item) => {
             if(localStorage.getItem(this.props.id.toFixed()) == item.startTime){
                 ReceivedBytes = this.props.TotalBytes
@@ -40,39 +39,35 @@ class Downloading extends React.Component {
         })
         let ifOver = setInterval(() => {
             ipcRenderer.on('download-item-updated',(event,item) => { 
-                startTIME = item.startTime
-                ReceivedBytes = item.receivedBytes
-                LastReceivedBytes = this.state.lastreceivedBytes
-                DownloadSpeed = ReceivedBytes - LastReceivedBytes
-                LastReceivedBytes = ReceivedBytes
-                DownloadSpeed = DownloadSpeed*2/(1024*1024)
-                if(DownloadSpeed < 1){
-                    DownloadSpeed *= 1024
-                    Speed = 'KB/s'
+                if(localStorage.getItem(this.props.id.toFixed()) == item.startTime){
+                    startTIME = item.startTime
+                    ReceivedBytes = item.receivedBytes
+                    LastReceivedBytes = this.state.lastreceivedBytes
+                    DownloadSpeed = ReceivedBytes - LastReceivedBytes
+                    LastReceivedBytes = ReceivedBytes
+                    DownloadSpeed = DownloadSpeed*2/(1024*1024)
                     if(DownloadSpeed < 1){
                         DownloadSpeed *= 1024
-                        Speed = 'b/s'
+                        Speed = 'KB/s'
+                        if(DownloadSpeed < 1){
+                            DownloadSpeed *= 1024
+                            Speed = 'b/s'
+                        }
+                    }else{
+                        Speed = 'MB/s'
                     }
-                }else{
-                    Speed = 'MB/s'
                 }
             })
             if(this.props.download.Done[this.props.id].ifDone === 0){
                 if(localStorage.getItem(this.props.id.toFixed()) == startTIME){
+                    let ifChange = 0
                     if(this.state.ifDone === 1){
                     }
                     else{
-                        ifChange = 0
-                        if(lastPause != localStorage.getItem('pause') && localStorage.getItem('pause') != -1){
+                        if(this.state.lastPause !== this.props.download.AllPause && this.props.download.AllPause !== -1){
+                            console.log(this.props.id)
                             ifChange = 1
-                            Pause = localStorage.getItem('pause')
-                            lastPause = Pause
-                            if(localStorage.getItem('pause') == 1){
-                                ipcRenderer.send('pause',{StartTime: this.props.StartTime})
-                            }
-                            else{
-                                ipcRenderer.send('resume',{StartTime: this.props.StartTime})
-                            }
+                            Pause = this.props.download.AllPause
                         }
                         else{
                             Pause = this.state.ifPause
@@ -84,7 +79,7 @@ class Downloading extends React.Component {
                             Message = '已暂停'
                         }
                     }
-                    if(ifChange === 1){
+                    if(ifChange === 0){
                         this.setState({
                             receivedBytes: ReceivedBytes,
                             lastreceivedBytes: LastReceivedBytes,
@@ -100,11 +95,12 @@ class Downloading extends React.Component {
                             speed: Speed,
                             message: Message,
                             ifPause: Pause,
+                            lastPause: this.props.download.AllPause,
                         })
                     }
                 }
             }
-        },50)
+        },25)
     }
     render() {
         return (
@@ -143,13 +139,17 @@ class Downloading extends React.Component {
                             onClick = {() =>{
                                 if(this.state.ifPause === 0){
                                     ipcRenderer.send('pause',{StartTime: this.props.StartTime})
+                                    this.props.updatedownloadState(-1)
                                     this.setState({
                                         ifPause: 1,
+                                        lastPause: 1,
                                     })
                                 }else{
                                     ipcRenderer.send('resume',{StartTime: this.props.StartTime})
+                                    this.props.updatedownloadState(-1)
                                     this.setState({
                                         ifPause: 0,
+                                        lastPause: 0,
                                     })
                                 }
                             }}
@@ -190,7 +190,9 @@ class Downloading extends React.Component {
                                 backgroundColor: 'transparent'
                             }}
                             onClick = {() => {
-                                ipcRenderer.send('cancel',{StartTime: this.props.StartTime})
+                                if(this.state.ifDone === 0){
+                                    ipcRenderer.send('cancel',{StartTime: this.props.StartTime})
+                                }
                             }}
                             shape="circle"
                             icon={<DeleteOutlined
@@ -220,6 +222,12 @@ const mapDispatchToProps = (dispatch) => {
             dispatch({
                 type: 'UPDATE_IFDONE',
                 data: {Index: Index}
+            })
+        },
+        updatedownloadState: (newState) => {
+            dispatch({
+                type: 'UPDATE_DOWNLOAD',
+                data: { AllPause: newState }
             })
         },
     };

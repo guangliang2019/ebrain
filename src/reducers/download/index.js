@@ -31,7 +31,6 @@ export default function download(state = initialState, action) {
             }
         case Types.ADD_IFDONE:
             let newdone = state.Done
-            console.log(state.index)
             newdone[state.index + 1] = {
                 ifDone: 0,
                 used: 0,

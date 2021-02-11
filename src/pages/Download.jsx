@@ -82,6 +82,7 @@ class Download extends React.Component {
                         onClick = {() => {
                             localStorage.setItem('pause',0)
                             this.props.updatedownloadState(0)
+                            ipcRenderer.send('AllResume')
                         }}
                         icon={<CaretRightOutlined
                             className="button"
@@ -107,6 +108,7 @@ class Download extends React.Component {
                         onClick = {() => {
                             localStorage.setItem('pause',1)
                             this.props.updatedownloadState(1)
+                            ipcRenderer.send('AllPause')
                         }}
                         icon={<PauseOutlined
                             className="button"

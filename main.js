@@ -81,11 +81,10 @@ function createWindow() {
                 ipcMain.on('pause', (event,sth) => {
                     if(sth.StartTime === startTime){
                         item.pause()
-                        mainWindow.webContents.send('download-item-updated', {
-                            startTime,
-                            paused: item.isPaused(),
-                        })
                     }
+                })
+                ipcMain.on('AllPause',(event) => {
+                    item.pause()
                 })
                 ipcMain.on('cancel', (event,sth) => {
                     if(sth.StartTime === startTime){
@@ -103,11 +102,11 @@ function createWindow() {
                 if (item.isPaused()) {
                     ipcMain.once('resume', (event,sth) => {
                         if(sth.StartTime === startTime){
-                            if (item.canResume()) {
-                                item.resume()
-                            }
-                            else { }
+                            item.resume()
                         }
+                    })
+                    ipcMain.once('AllResume',(event) => {
+                        item.resume()
                     })
                 }
                 else {

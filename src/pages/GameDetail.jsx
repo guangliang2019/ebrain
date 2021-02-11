@@ -5,7 +5,6 @@ import { DownloadOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 
 const {ipcRenderer} = window.require('electron')
-let downloadsPath = 'H:\\download\\'
 
 const styles = {
     root: {
