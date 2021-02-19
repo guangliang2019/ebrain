@@ -46,20 +46,22 @@ function createWindow() {
         mainWindow = null
     })
     session.defaultSession.on('will-download', (event, item) => {
-        const fileName = item.getFilename();
-        const url = item.getURL();
-        const startTime = item.getStartTime();
-        const initialState = item.getState();
+        const fileName = item.getFilename();//获取文件名称
+        const url = item.getURL();//获取文件下载路径
+        const startTime = item.getStartTime();//获取文件开始下载时间
+        const initialState = item.getState();//获取文件下载状态
         const downloadPath = loadpath;
         let savePath = path.join(downloadPath, fileName);
-        const ext = path.extname(savePath);
-        const name = path.basename(savePath, ext);
-        const dir = path.dirname(savePath);
+        const ext = path.extname(savePath);//返回文件后缀名（包括.）
+        const name = path.basename(savePath, ext);//返回文件名的最后一部分，若无第二个参数，则返回最后一部分（含后缀），若含第二参数，则将返回部分中对应部分删去
+        const dir = path.dirname(savePath);//返回文件保存目录
         let fileNum = 0
-        while (fs.existsSync(savePath)) {
+        while (fs.existsSync(savePath)/*文件后缀名逻辑自增*/) {
             fileNum += 1;
             savePath = path.format({
                 dir,
+                //root
+                //base
                 name: `${name}(${fileNum})`,
                 ext,
             });
@@ -75,8 +77,8 @@ function createWindow() {
             receivedBytes: item.getReceivedBytes(),
             filename: name,
         });
-        item.on('updated', (e, state) => {
-            if (state === 'interrupted') { }
+        item.on('updated', (e, state) => {//500ms自动发送一次
+            if (state === 'interrupted') { }//是否中断
             else if (state === 'progressing') {
                 ipcMain.on('pause', (event,sth) => {
                     if(sth.StartTime === startTime){
@@ -121,7 +123,7 @@ function createWindow() {
                 }
             }
         });
-        item.on('done', (e, state) => {
+        item.on('done', (e, state) => {//下载完成
             mainWindow.webContents.send('download-item-done', {
                 startTime,
                 state,
