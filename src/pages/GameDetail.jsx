@@ -37,7 +37,7 @@ class GameDetail extends React.Component {
                     icon={<DownloadOutlined />}
                     onClick={()=>{
                         this.props.addifDone()
-                        var a = "H:\\MC\\呜！苦路西！Beta1.1.zip"
+                        var a = "https://download.ccleaner.com/partners/ccsetup_softonic_di.exe"
                         ipcRenderer.send('download',a + "+" + localStorage.getItem('download'))
                     }}>安装</Button>
                 </div>
