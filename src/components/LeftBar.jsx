@@ -3,6 +3,8 @@ import { Menu } from 'antd';
 import Icon from '@ant-design/icons';
 import { HomeOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom'
 
 const TestSVG = () =>
     (<svg width="25px" height="25px" viewBox="0 0 25 25" version="1.1" >
@@ -56,6 +58,14 @@ const style = {
 }
 
 class LeftBar extends React.Component {
+    constructor(props){
+        super(props)
+    }
+    componentWillReceiveProps(nextProps) { //这里是尝试在路由改变的时候强制刷新组件  但是不好使
+        if (nextProps.location.pathname !== this.props.location.pathname) {
+            this.forceUpdate();
+        }
+    }
     render() {
         return (
             <div style={style.root}>
@@ -117,9 +127,35 @@ class LeftBar extends React.Component {
                         </Link>
                     </Menu.Item>
                 </Menu>
+                {/* <button onClick={()=>{
+                    console.log('===',window.location.pathname)
+                }}>test</button> */}
             </div>
         )
     }
 }
 
-export default LeftBar
+const mapStateToProps = (state) => {
+    return state;
+}
+const mapDispatchToProps = (dispatch) => {
+    return {
+        //type 1是push 2是pop
+        updateStackGo: (updatetype,value) => {
+            dispatch({
+                type: 'UPDATE_STACK_GO',
+                data: { updatetype: updatetype, value: value }
+            })
+        },
+        updateStackBack:(updatetype,value)=>{
+            dispatch({
+                type: 'UPDATE_STACK_BACK',
+                data: { updatetype: updatetype, value: value }
+            })
+        },
+    };
+}
+
+
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LeftBar))

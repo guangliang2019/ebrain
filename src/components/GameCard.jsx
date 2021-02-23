@@ -20,12 +20,12 @@ class GameCard extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-
         }
     }
     render() {
         return (
-            <Link to="/Detail">
+            <Link to={"/GameBase/Detail/"+this.props.gameid}>
+                
                 <Card
                     onClick = {()=>{
                         this.props.updateGamekey(this.props.gameid)

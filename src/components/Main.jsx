@@ -22,9 +22,9 @@ class Main extends React.Component {
         return (
             <div style={style.root}>
                 <Route path="/Home" component={Home} />
-                <Route path="/GameBase" component={GameBase} />
+                <Route  exact path="/GameBase" component={GameBase} />
                 <Route path="/Report" component={Report} />
-                <Route path="/Detail" component={GameDetail} />
+                <Route path="/GameBase/Detail/:id" component={GameDetail} />
                 <Route path="/Download" component={Download} />
                 {/* <GameBase /> */}
             </div>

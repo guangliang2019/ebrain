@@ -8,12 +8,13 @@ import apiStatus from './apiStatus/index.js'
 import gameStatus from './gameStatus/index.js'
 //下载路径
 import download from './download/index.js' 
-
-
+//浏览器
+import browser from './browser/index.js'
 
 export default combineReducers({
     userInfo,
     apiStatus,
     gameStatus,
     download,
+    browser,
 });
