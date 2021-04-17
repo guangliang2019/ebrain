@@ -2,7 +2,7 @@
 const { app, BrowserWindow, webContents, session } = require('electron')
 const path = require('path')
 const url = require('url')
-const {ipcMain,dialog} = require('electron')
+const { ipcMain, dialog } = require('electron')
 var fs = require('fs')
 // 保持window对象的全局引用,避免JavaScript对象被垃圾回收时,窗口被自动关闭.
 let mainWindow
@@ -13,7 +13,7 @@ function createWindow() {
 
     mainWindow = new BrowserWindow({
         width: 1440,
-        height: 1024,
+        height: 1024 + 22,
         transparent: true,
         icon: './favicon.ico',
         //frame: false,
@@ -78,16 +78,16 @@ function createWindow() {
         item.on('updated', (e, state) => {
             if (state === 'interrupted') { }
             else if (state === 'progressing') {
-                ipcMain.on('pause', (event,sth) => {
-                    if(sth.StartTime === startTime){
+                ipcMain.on('pause', (event, sth) => {
+                    if (sth.StartTime === startTime) {
                         item.pause()
                     }
                 })
-                ipcMain.on('AllPause',(event) => {
+                ipcMain.on('AllPause', (event) => {
                     item.pause()
                 })
-                ipcMain.on('cancel', (event,sth) => {
-                    if(sth.StartTime === startTime){
+                ipcMain.on('cancel', (event, sth) => {
+                    if (sth.StartTime === startTime) {
                         item.cancel()
                         mainWindow.webContents.send('download-item-updated', {
                             startTime,
@@ -100,12 +100,12 @@ function createWindow() {
                     }
                 })
                 if (item.isPaused()) {
-                    ipcMain.once('resume', (event,sth) => {
-                        if(sth.StartTime === startTime){
+                    ipcMain.once('resume', (event, sth) => {
+                        if (sth.StartTime === startTime) {
                             item.resume()
                         }
                     })
-                    ipcMain.once('AllResume',(event) => {
+                    ipcMain.once('AllResume', (event) => {
                         item.resume()
                     })
                 }
@@ -152,12 +152,12 @@ ipcMain.on('download', (event, args) => {
     mainWindow.webContents.downloadURL(downloadpath)
     //触发will-download事件
 })
-ipcMain.on('dialog',(event) => {
+ipcMain.on('dialog', (event) => {
     const paths = dialog.showOpenDialogSync({
         title: '选择文件存放目录',
         properties: ['openDirectory'],
     })
-    if (paths && paths.length){
-        mainWindow.webContents.send('downloadPath',paths[0])
+    if (paths && paths.length) {
+        mainWindow.webContents.send('downloadPath', paths[0])
     }
 })

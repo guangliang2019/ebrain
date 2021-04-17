@@ -11,7 +11,7 @@ export default function App() {
     <Router >
       <div style={{ height: '100vh', background: "rgba(0,0,0,0)" }}>
         <NavBar></NavBar>
-        <div style={{ display: 'flex', flexDirection: 'row', height: '944px', background: "rgba(0,0,0,0)" }}>
+        <div style={{ display: 'flex', flexDirection: 'row', height: '924px', background: "rgba(0,0,0,0)" }}>
           <LeftBar></LeftBar>
           <div>
             <div style={{
