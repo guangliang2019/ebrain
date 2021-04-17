@@ -11,4 +11,6 @@ export const UPDATE_GAMEKEY = 'UPDATE_GAMEKEY';
 export const UPDATE_DOWNLOAD = 'UPDATE_DOWNLOAD';
 export const UPDATE_IFDONE = 'UPDATE_IFDONE';
 export const ADD_IFDONE = 'ADD_IFDONE';
-
+//全局栈
+export const UPDATE_STACK_GO = 'UPDATE_STACK_GO';
+export const UPDATE_STACK_BACK = 'UPDATE_STACK_BACK';

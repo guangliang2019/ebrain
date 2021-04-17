@@ -3,7 +3,7 @@ import AIconWithPopover from '../components/AIconWithPopover'
 import { AIcon1 } from '../icons/ablilty'
 
 
-class Report extends React.Component {
+class Test extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -13,11 +13,11 @@ class Report extends React.Component {
     render() {
         return (
             <div>
-                .
+                ???
                 <AIconWithPopover />
             </div>
         )
     }
 }
 
-export default Report
+export default Test

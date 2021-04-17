@@ -9,25 +9,25 @@ class Downloading extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            receivedBytes: this.props.download.Done[this.props.id].ifDone === 1?this.props.TotalBytes:'',
-            lastreceivedBytes: 0,
-            speed: '',
-            ifPause: 0,
-            ifDone: 0,
-            lastPause: -1,
-            message: this.props.download.Done[this.props.id].ifDone === 1?'已完成':'',
+            receivedBytes: this.props.download.Done[this.props.id].ifDone === 1?this.props.TotalBytes:'',//已下载的字节数
+            lastReceivedBytes: 0,//上一次接收的字节数
+            downloadSpeed: '',//下载速度
+            ifPause: 0,//该下载项目是否暂停
+            ifDone: 0,//该下载项目是否完成
+            lastPause: -1,//上一次的全局暂停状态
+            message: this.props.download.Done[this.props.id].ifDone === 1?'已完成':'',//下载项目显示的信息
         }
     }
     componentDidMount(){
         let ReceivedBytes = ''
         let LastReceivedBytes = ''
-        let DownloadSpeed = ''
-        let Speed = ''
-        let startTIME = ''
+        let downloadSpeed_temp = ''
+        let downloadSpeed = ''
+        let startTime_temp = ''
         let Message = ''
         let Pause = 0
         ipcRenderer.on('download-item-done',(event,item) => {
-            if(localStorage.getItem(this.props.id.toFixed()) == item.startTime){
+            if(localStorage.getItem(this.props.id.toFixed()) == item.startTime)/*判断item的下载时间是否与该下载项目相同*/{
                 ReceivedBytes = this.props.TotalBytes
                 this.props.updateifDone(this.props.id)
                 this.setState({
@@ -40,30 +40,30 @@ class Downloading extends React.Component {
         let ifOver = setInterval(() => {
             ipcRenderer.on('download-item-updated',(event,item) => { 
                 if(localStorage.getItem(this.props.id.toFixed()) == item.startTime){
-                    startTIME = item.startTime
+                    startTime_temp = item.startTime
                     ReceivedBytes = item.receivedBytes
-                    LastReceivedBytes = this.state.lastreceivedBytes
-                    DownloadSpeed = ReceivedBytes - LastReceivedBytes
+                    LastReceivedBytes = this.state.lastReceivedBytes
+                    downloadSpeed_temp = ReceivedBytes - LastReceivedBytes
                     LastReceivedBytes = ReceivedBytes
-                    DownloadSpeed = DownloadSpeed*2/(1024*1024)
-                    if(DownloadSpeed < 1){
-                        DownloadSpeed *= 1024
-                        Speed = 'KB/s'
-                        if(DownloadSpeed < 1){
-                            DownloadSpeed *= 1024
-                            Speed = 'b/s'
+                    //换算下载速度
+                    downloadSpeed_temp = downloadSpeed_temp*2/(1024*1024)
+                    if(downloadSpeed_temp < 1){
+                        downloadSpeed_temp *= 1024
+                        downloadSpeed = 'KB/s'
+                        if(downloadSpeed_temp < 1){
+                            downloadSpeed_temp *= 1024
+                            downloadSpeed = 'b/s'
                         }
                     }else{
-                        Speed = 'MB/s'
+                        downloadSpeed = 'MB/s'
                     }
                 }
             })
             if(this.props.download.Done[this.props.id].ifDone === 0){
-                if(localStorage.getItem(this.props.id.toFixed()) == startTIME){
+                if(localStorage.getItem(this.props.id.toFixed()) == startTime_temp){
                     let ifChange = 0
-                    if(this.state.ifDone === 1){
-                    }
-                    else{
+                    if(this.state.ifDone === 0){
+                        //判断Pause是否应该被全局更改
                         if(this.state.lastPause !== this.props.download.AllPause && this.props.download.AllPause !== -1){
                             console.log(this.props.id)
                             ifChange = 1
@@ -72,10 +72,11 @@ class Downloading extends React.Component {
                         else{
                             Pause = this.state.ifPause
                         }
+                        //判断Pause的状态
                         if(Pause === 0){
-                            Message = (DownloadSpeed/1).toFixed(2)+Speed
+                            Message = (downloadSpeed_temp/1).toFixed(2)+downloadSpeed
                         }
-                        else if(Pause === 1){
+                        else{
                             Message = '已暂停'
                         }
                     }
@@ -83,7 +84,7 @@ class Downloading extends React.Component {
                         this.setState({
                             receivedBytes: ReceivedBytes,
                             lastreceivedBytes: LastReceivedBytes,
-                            speed: Speed,
+                            speed: downloadSpeed,
                             message: Message,
                             ifPause: Pause,
                         })
@@ -92,15 +93,15 @@ class Downloading extends React.Component {
                         this.setState({
                             receivedBytes: ReceivedBytes,
                             lastreceivedBytes: LastReceivedBytes,
-                            speed: Speed,
+                            speed: downloadSpeed,
                             message: Message,
                             ifPause: Pause,
-                            lastPause: this.props.download.AllPause,
+                            lastPause: Pause,
                         })
                     }
                 }
             }
-        },25)
+        },500)
     }
     render() {
         return (
