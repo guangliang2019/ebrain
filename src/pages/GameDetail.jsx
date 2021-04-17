@@ -33,16 +33,6 @@ class GameDetail extends React.Component {
                         width="851px"
                         height="280px"
                     />
-<<<<<<< HEAD
-                    <Button style={{ marginTop: '16px', marginLeft: '17px', width: '152px', height: '48px', borderRadius: '3px' }}
-                        type="primary"
-                        icon={<DownloadOutlined />}
-                        onClick={() => {
-                            this.props.addifDone()
-                            var a = "H:\\MC\\呜！苦路西！Beta1.1.zip"
-                            ipcRenderer.send('download', a + "+" + localStorage.getItem('download'))
-                        }}>安装</Button>
-=======
                     <Button style={{ marginTop: '16px', marginLeft: '17px', width: '152px', height: '48px', borderRadius: '3px' }} 
                     type="primary" 
                     icon={<DownloadOutlined />}
@@ -51,7 +41,6 @@ class GameDetail extends React.Component {
                         var a = "https://download.ccleaner.com/partners/ccsetup_softonic_di.exe"
                         ipcRenderer.send('download',a + "+" + localStorage.getItem('download'))
                     }}>安装</Button>
->>>>>>> 651eb34c34c086017f61e823fb569cc14e8a8e71
                 </div>
                 <div style={{ width: '851px', display: 'flex', flexDirection: 'column', marginTop: '32px', marginLeft: '34px', }}>
                     <div style={{ display: 'flex', alignItems: 'center', fontSize: '20px', color: '#030852', fontWeight: 'bold', marginBottom: '20px' }}>

@@ -122,6 +122,23 @@ class LeftBar extends React.Component {
                         title="Navigation One"
                         style={style.menuItem}
                     >
+                        <Link to="/Test">
+                            测试
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item
+                        key="sub4"
+                        icon={<Icon
+                            component={TestSVG}
+                            style={{
+                                fontSize: '22px',
+                                marginRight: '16px',
+                                marginLeft: '12px',
+                                color: 'inherit'
+                            }} />}
+                        title="Navigation One"
+                        style={style.menuItem}
+                    >
                         <Link to="/Report">
                             报告
                         </Link>
