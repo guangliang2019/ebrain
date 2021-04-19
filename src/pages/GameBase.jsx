@@ -13,6 +13,76 @@ const antIcon = <LoadingOutlined style={{ fontSize: 48 }} spin />;
 
 const { Title } = Typography;
 
+let initData = {
+    recommendedGameList: [
+        {
+            gname: '游戏名称'
+        }, {
+            gname: '游戏名称'
+        }, {
+            gname: '游戏名称'
+        }
+    ],
+    allGameList: [
+        {
+            id: 1,
+            gname: '游戏名称'
+        }, {
+            id: 2,
+            gname: '游戏名称'
+        }, {
+            id: 3,
+            gname: '游戏名称'
+        }, {
+            id: 4,
+            gname: '游戏名称'
+        }, {
+            id: 5,
+            gname: '游戏名称'
+        }, {
+            id: 6,
+            gname: '游戏名称'
+        }, {
+            id: 1,
+            gname: '游戏名称'
+        }, {
+            id: 2,
+            gname: '游戏名称'
+        }, {
+            id: 3,
+            gname: '游戏名称'
+        }, {
+            id: 4,
+            gname: '游戏名称'
+        }, {
+            id: 5,
+            gname: '游戏名称'
+        }, {
+            id: 6,
+            gname: '游戏名称'
+        }, {
+            id: 1,
+            gname: '游戏名称'
+        }, {
+            id: 2,
+            gname: '游戏名称'
+        }, {
+            id: 3,
+            gname: '游戏名称'
+        }, {
+            id: 4,
+            gname: '游戏名称'
+        }, {
+            id: 5,
+            gname: '游戏名称'
+        }, {
+            id: 6,
+            gname: '游戏名称'
+        }
+    ],
+}
+
+
 
 const style = {
     root: {
@@ -61,8 +131,8 @@ class GameBase extends React.Component {
         super(props)
         this.state = {
             isLoading: true,
-            recommendedGameList: [],
-            allGameList: []
+            recommendedGameList: initData.recommendedGameList,
+            allGameList: initData.allGameList
         }
     }
 
@@ -93,7 +163,7 @@ class GameBase extends React.Component {
         gameList.forEach(element => {
             games.push(
                 <GameCard
-                    key = {element.gid}
+                    key={element.gid}
                     gameid={element.gid}
                     title={element.gname}
                 />
@@ -102,21 +172,21 @@ class GameBase extends React.Component {
         return games
     }
     render() {
-        if (this.state.isLoading) {
-            this.getData()
-            this.getData2()
-            return (
-                <div style={{
-                    width: '920px',
-                    height: '943px',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                }}>
-                    <Spin indicator={antIcon} />
-                </div>
-            )
-        }
+        // if (this.state.isLoading) {
+        //     this.getData()
+        //     this.getData2()
+        //     return (
+        //         <div style={{
+        //             width: '920px',
+        //             height: '943px',
+        //             display: 'flex',
+        //             justifyContent: 'center',
+        //             alignItems: 'center'
+        //         }}>
+        //             <Spin indicator={antIcon} />
+        //         </div>
+        //     )
+        // }
         return (
             <div style={style.root}>
                 <div style={{

@@ -8,9 +8,8 @@ const onClick = ({ key }) => {
 
 const menu = (
     <Menu onClick={onClick}>
-        <Menu.Item key="1">1st menu item</Menu.Item>
-        <Menu.Item key="2">2nd memu item</Menu.Item>
-        <Menu.Item key="3">3rd menu item</Menu.Item>
+        <Menu.Item key="2">   切换用户   </Menu.Item>
+        <Menu.Item key="3">   退出eBrain   </Menu.Item>
     </Menu>
 );
 
